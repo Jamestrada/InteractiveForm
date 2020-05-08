@@ -32,22 +32,27 @@ const tShirtColors = document.querySelectorAll('#color option');
 tShirtColors[0].selected = true;
 
 const hideColors = () => {
-    for (let i = 1; i < tShirtColors.length; i++) {
+    for (let i = 0; i < tShirtColors.length; i++) {
         tShirtColors[i].hidden = true;
     }
+    tShirtColors[0].selected = true;
 };
 hideColors();
 
-const showColors = () => {
-    for (let i = 1; i < tShirtColors.length; i++) {
-        tShirtColors[i].hidden = false;
+const showColors = (colors) => {
+    hideColors();
+    for (let i = 0; i < colors.length; i++) {
+        colors[i].hidden = false;
     }
+    tShirtColors[0].hidden = true;
 };
 
 const tShirtDesign = document.querySelector('#design');
 tShirtDesign.addEventListener('change', (e) => {
-    if (e.target.value !== 'Select Theme') {
-        showColors();
+    if (e.target.value === 'js puns') {
+        showColors([tShirtColors[1], tShirtColors[2], tShirtColors[3]]);
+    } else if (e.target.value === 'heart js') {
+        showColors([tShirtColors[4], tShirtColors[5], tShirtColors[6]]);
     } else {
         hideColors();
     }
