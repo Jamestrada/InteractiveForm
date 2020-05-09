@@ -58,4 +58,18 @@ tShirtDesign.addEventListener('change', (e) => {
     }
 });
 
+const activities = document.querySelector('.activities');
+const checkboxes = document.querySelectorAll('.activities input');
 
+activities.addEventListener('change', (e) => {
+    const clicked = e.target;
+    for (const checkbox of checkboxes) {
+        if (checkbox.dataset['dayAndTime'] === clicked.dataset['dayAndTime'] && checkbox !== clicked) {
+            if (clicked.checked) {
+                checkbox.disabled = true;
+            } else {
+                checkbox.disabled = false;
+            }
+        }
+    }
+});
