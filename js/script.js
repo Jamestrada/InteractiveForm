@@ -5,8 +5,8 @@ Developed by: James Estrada
 Interactive web form.
 ***********************************************/
 
-const firstFocus = document.getElementById('name');
-firstFocus.focus();
+const name = document.getElementById('name');
+name.focus();
 
 // Job Role section
 
