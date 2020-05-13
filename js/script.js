@@ -29,6 +29,7 @@ jobRole.addEventListener('change', (e) => {
 const selectTShirtTheme = document.createElement('option');
 selectTShirtTheme.value = 'select theme';
 selectTShirtTheme.textContent = 'Please select a T-shirt theme';
+const colorDiv = document.querySelector('#colors-js-puns');
 const colorMenu = document.querySelector('#color');
 const firstColorOption = document.querySelector('option[value="cornflowerblue"]');
 colorMenu.insertBefore(selectTShirtTheme, firstColorOption);
@@ -36,6 +37,7 @@ const tShirtColors = document.querySelectorAll('#color option');
 tShirtColors[0].selected = true;
 
 const hideColors = () => {
+    colorDiv.hidden = true;
     for (let i = 0; i < tShirtColors.length; i++) {
         tShirtColors[i].hidden = true;
     }
@@ -45,10 +47,12 @@ hideColors();
 
 const showColors = (colors) => {
     hideColors();
+    colorDiv.hidden = false;
     for (let i = 0; i < colors.length; i++) {
         colors[i].hidden = false;
     }
     tShirtColors[0].hidden = true;
+    colors[0].selected = true;
 };
 
 const tShirtDesign = document.querySelector('#design');

@@ -8,6 +8,20 @@ const form = document.querySelector('form');
 const email = document.querySelector('#mail');
 const activity = document.querySelector('.activities');
 
+// Credit card number error message.
+const ccDiv = document.querySelector('#credit-card');
+const ccNumDiv = document.querySelector('.col-6');
+const ccMessage = document.createElement('p');
+ccDiv.insertBefore(ccMessage, ccNumDiv);
+ccMessage.hidden = true;
+
+// Email error message.
+const emailLabel = document.querySelector('#mail').previousElementSibling;
+const emailMessage = document.createElement('span');
+emailLabel.appendChild(emailMessage);
+emailMessage.hidden = false;
+
+
 const nameValidator = () => {
     const nameValue = name.value;
     if (nameValue) {
@@ -26,9 +40,13 @@ const emailValidator = () => {
 
     if (atSymbol > 1 && dot > atSymbol + 1) {
         email.style.borderColor = '';
+        emailMessage.hidden = true;
         return true;
     } else {
         email.style.borderColor = 'red';
+        emailMessage.textContent = ' Invalid email';
+        emailMessage.style.color = 'red';
+        emailMessage.hidden = false;
         return false;
     }
 };
@@ -54,7 +72,6 @@ const activitiesValidator = () => {
 
 const creditCardValidator = () => {
     if (paymentMethods[1].selected === true) {
-        // const ccInputFields = creditCard.querySelectorAll('input');
         const ccNumbers = document.getElementById('cc-num');
         const zip = document.getElementById('zip');
         const cvv = document.getElementById('cvv');
@@ -62,7 +79,16 @@ const creditCardValidator = () => {
         
         if (typeof(ccNumbers) === 'number' && ccNumbers.value.length > 12 && ccNumbers.value.length < 17) {
             ccNumbers.style.borderColor = '';
+            ccMessage.hidden = true;
         } else {
+            // Conditional error message
+            if (ccNumbers.value.length === 0) {
+                ccMessage.textContent = 'Please enter a credit card number';
+            } else if (ccNumbers.value.length < 13 || ccNumbers.value.length > 16) {
+                ccMessage.textContent = 'Please enter a number that is between 13 and 16 digits long';
+            }
+            ccMessage.style.color = 'red';
+            ccMessage.hidden = false;
             ccNumbers.style.borderColor = 'red';
             isInvalid = true;
         }
@@ -86,8 +112,9 @@ const creditCardValidator = () => {
     }
 };
 
+// Real-time error messages.
 name.addEventListener('blur', nameValidator);
-email.addEventListener('blur', emailValidator);
+email.addEventListener('keyup', emailValidator);
 
 form.addEventListener('submit', (e) => {
     if (!nameValidator()) {
