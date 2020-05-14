@@ -77,7 +77,7 @@ const creditCardValidator = () => {
         const cvv = document.getElementById('cvv');
         let isInvalid = false;
         
-        if (typeof(ccNumbers) === 'number' && ccNumbers.value.length > 12 && ccNumbers.value.length < 17) {
+        if (ccNumbers.value.length > 12 && ccNumbers.value.length < 17) { // typeof(ccNumbers) === 'number' && 
             ccNumbers.style.borderColor = '';
             ccMessage.hidden = true;
         } else {
@@ -110,11 +110,13 @@ const creditCardValidator = () => {
         }
         return true;
     }
+    return true;
 };
 
 // Real-time error messages.
 name.addEventListener('blur', nameValidator);
 email.addEventListener('keyup', emailValidator);
+activity.addEventListener('change', activitiesValidator);
 
 form.addEventListener('submit', (e) => {
     if (!nameValidator()) {
