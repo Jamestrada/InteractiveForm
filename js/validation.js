@@ -52,22 +52,17 @@ const emailValidator = () => {
 };
 
 const activitiesValidator = () => {
-    const activitiesSelected = [];
     const legend = activities.querySelector('legend');
     for (const checkbox of checkboxes) {
         if (checkbox.checked) {
-            activitiesSelected.push(checkbox);
+            legend.style.borderTopColor = '';
+            legend.style.color = '';
+            return true;
         }
     }
-    if (activitiesSelected.length > 0) {
-        legend.style.borderTopColor = '';
-        legend.style.color = '';
-        return true;
-    } else {
-        legend.style.borderTopColor = 'red';
-        legend.style.color = 'red';
-        return false;
-    }
+    legend.style.borderTopColor = 'red';
+    legend.style.color = 'red';
+    return false;
 };
 
 const creditCardValidator = () => {
@@ -76,10 +71,26 @@ const creditCardValidator = () => {
         const zip = document.getElementById('zip');
         const cvv = document.getElementById('cvv');
         let isInvalid = false;
-        
+
+
+        if (!isNaN(cvv.value) && cvv.value.length === 3) {
+            cvv.style.borderColor = '';
+        } else {
+            cvv.style.borderColor = 'red';
+            ccMessage.textContent = 'Please enter a 3-digit number';
+            isInvalid = true;
+        }
+
+        if (!isNaN(zip.value) && zip.value.length === 5) {
+            zip.style.borderColor = '';
+        } else {
+            zip.style.borderColor = 'red';
+            ccMessage.textContent = 'Please enter a 5-digit ZIP Code';
+            isInvalid = true;
+        }
+
         if (ccNumbers.value.length > 12 && ccNumbers.value.length < 17) { // typeof(ccNumbers) === 'number' && 
             ccNumbers.style.borderColor = '';
-            ccMessage.hidden = true;
         } else {
             // Conditional error message
             if (ccNumbers.value.length === 0) {
@@ -87,27 +98,16 @@ const creditCardValidator = () => {
             } else if (ccNumbers.value.length < 13 || ccNumbers.value.length > 16) {
                 ccMessage.textContent = 'Please enter a number that is between 13 and 16 digits long';
             }
-            ccMessage.style.color = 'red';
-            ccMessage.hidden = false;
             ccNumbers.style.borderColor = 'red';
-            isInvalid = true;
-        }
-        if (!isNaN(zip.value) && zip.value.length === 5) {
-            zip.style.borderColor = '';
-        } else {
-            zip.style.borderColor = 'red';
-            isInvalid = true;
-        }
-        if (!isNaN(cvv.value) && cvv.value.length === 3) {
-            cvv.style.borderColor = '';
-        } else {
-            cvv.style.borderColor = 'red';
             isInvalid = true;
         }
 
         if (isInvalid) {
+            ccMessage.style.color = 'red';
+            ccMessage.hidden = false;
             return false;
         }
+        ccMessage.hidden = true;
         return true;
     }
     return true;
