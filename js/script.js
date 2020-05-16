@@ -9,7 +9,6 @@ const name = document.getElementById('name');
 name.focus();
 
 // Job Role section
-
 const jobRole = document.getElementById('title');
 // Select and hide initially the other-job-role text field.
 const otherJobRole = document.getElementById('other-job-role'); 
@@ -24,8 +23,7 @@ jobRole.addEventListener('change', (e) => {
     }
 });
 
-// T-Shirt info section
-
+// T-Shirt info section.
 const selectTShirtTheme = document.createElement('option');
 selectTShirtTheme.value = 'select theme';
 selectTShirtTheme.textContent = 'Please select a T-shirt theme';
@@ -36,6 +34,11 @@ colorMenu.insertBefore(selectTShirtTheme, firstColorOption);
 const tShirtColors = document.querySelectorAll('#color option');
 tShirtColors[0].selected = true;
 
+/**
+ * Hide the color label, the select menu, and all color options.
+ * 
+ * @returns {undefined} Hides all the contents of the color section.
+ */
 const hideColors = () => {
     colorDiv.hidden = true;
     for (let i = 0; i < tShirtColors.length; i++) {
@@ -45,6 +48,12 @@ const hideColors = () => {
 };
 hideColors();
 
+/**
+ * Show the color label, the select menu, and color options depending on the chosen design.
+ * 
+ * @param {Array} colors - The array of color options based on the T-Shirt design.
+ * @returns {boolean} Shows all the contents of the color section according to T-Shirt design.
+ */
 const showColors = (colors) => {
     hideColors();
     colorDiv.hidden = false;
@@ -55,6 +64,7 @@ const showColors = (colors) => {
     colors[0].selected = true;
 };
 
+// Listen for design chosen and send the T-Shirt color options to the function showColors.
 const tShirtDesign = document.querySelector('#design');
 tShirtDesign.addEventListener('change', (e) => {
     if (e.target.value === 'js puns') {
@@ -66,8 +76,7 @@ tShirtDesign.addEventListener('change', (e) => {
     }
 });
 
-// Register for Activities section
-
+// Register for Activities section.
 const activities = document.querySelector('.activities');
 const checkboxes = document.querySelectorAll('.activities input');
 const total = document.createElement('h3');
@@ -75,6 +84,8 @@ let cost = 0;
 activities.appendChild(total);
 total.textContent = `Total price: $${cost}`;
 
+// Disallow selection of a workshop with the same day and time as another.
+// Update the total price with the workshops selected.
 activities.addEventListener('change', (e) => {
     const clicked = e.target;
     for (const checkbox of checkboxes) {

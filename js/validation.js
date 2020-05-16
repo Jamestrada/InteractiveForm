@@ -21,7 +21,11 @@ const emailMessage = document.createElement('span');
 emailLabel.appendChild(emailMessage);
 emailMessage.hidden = false;
 
-
+/**
+ * 
+ * 
+ * @returns {boolean} 
+ */
 const nameValidator = () => {
     const nameValue = name.value;
     if (nameValue) {
@@ -33,6 +37,11 @@ const nameValidator = () => {
     }
 };
 
+/**
+ * 
+ * 
+ * @returns {boolean} 
+ */
 const emailValidator = () => {
     const emailValue = email.value;
     const atSymbol = emailValue.indexOf('@');
@@ -51,6 +60,11 @@ const emailValidator = () => {
     }
 };
 
+/**
+ * 
+ * 
+ * @returns {boolean} 
+ */
 const activitiesValidator = () => {
     const legend = activities.querySelector('legend');
     for (const checkbox of checkboxes) {
@@ -65,6 +79,11 @@ const activitiesValidator = () => {
     return false;
 };
 
+/**
+ * 
+ * 
+ * @returns {boolean} 
+ */
 const creditCardValidator = () => {
     if (paymentMethods[1].selected === true) {
         const ccNumbers = document.getElementById('cc-num');
