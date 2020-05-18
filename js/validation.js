@@ -108,7 +108,7 @@ const creditCardValidator = () => {
             isInvalid = true;
         }
 
-        if (ccNumbers.value.length > 12 && ccNumbers.value.length < 17) { // typeof(ccNumbers) === 'number' && 
+        if (/^\d+$/.test(ccNumbers) && ccNumbers.value.length > 12 && ccNumbers.value.length < 17) { // typeof(ccNumbers) === 'number' && 
             ccNumbers.style.borderColor = '';
         } else {
             // Conditional error message
