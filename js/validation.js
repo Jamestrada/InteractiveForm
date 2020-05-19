@@ -22,13 +22,13 @@ emailLabel.appendChild(emailMessage);
 emailMessage.hidden = false;
 
 /**
+ * Check if name field is not empty.
  * 
- * 
- * @returns {boolean} 
+ * @returns {boolean} Returns true if the name field is not empty; false otherwise.
  */
 const nameValidator = () => {
-    const nameValue = name.value;
-    if (nameValue) {
+    const regexName = /\w+/;
+    if (regexName.test(name.value)) {
         name.style.borderColor = '';
         return true;
     } else {
@@ -38,16 +38,14 @@ const nameValidator = () => {
 };
 
 /**
+ * Check if email is valid.
  * 
- * 
- * @returns {boolean} 
+ * @returns {boolean} Returns true if the email has a correct format; false otherwise.
  */
 const emailValidator = () => {
-    const emailValue = email.value;
-    const atSymbol = emailValue.indexOf('@');
-    const dot = emailValue.lastIndexOf('.');
+    const regexEmail = /^[^@]+@[^@.]+\.[a-z]+$/i;
 
-    if (atSymbol > 1 && dot > atSymbol + 1) {
+    if (regexEmail.test(email.value)) {
         email.style.borderColor = '';
         emailMessage.hidden = true;
         return true;
@@ -61,9 +59,9 @@ const emailValidator = () => {
 };
 
 /**
+ * Check that at least an activity has been selected.
  * 
- * 
- * @returns {boolean} 
+ * @returns {boolean} Returns true if at least an activity has been selected.
  */
 const activitiesValidator = () => {
     const legend = activities.querySelector('legend');
@@ -80,19 +78,22 @@ const activitiesValidator = () => {
 };
 
 /**
+ * Validate a credit card number, cvv, and zip code.
  * 
- * 
- * @returns {boolean} 
+ * @returns {boolean} Returns true if all credit card details are correct; otherwise return false and display error message.
  */
 const creditCardValidator = () => {
     if (paymentMethods[1].selected === true) {
         const ccNumbers = document.getElementById('cc-num');
+        const regexCCNumbers = /^\d{13,16}$/;
         const zip = document.getElementById('zip');
+        const regexZip = /^\d{5}$/;
         const cvv = document.getElementById('cvv');
+        const regexCvv = /^\d{3}$/;
         let isInvalid = false;
 
 
-        if (!isNaN(cvv.value) && cvv.value.length === 3) {
+        if (regexCvv.test(cvv.value)) {
             cvv.style.borderColor = '';
         } else {
             cvv.style.borderColor = 'red';
@@ -100,7 +101,7 @@ const creditCardValidator = () => {
             isInvalid = true;
         }
 
-        if (!isNaN(zip.value) && zip.value.length === 5) {
+        if (regexZip.test(zip.value)) {
             zip.style.borderColor = '';
         } else {
             zip.style.borderColor = 'red';
@@ -108,13 +109,13 @@ const creditCardValidator = () => {
             isInvalid = true;
         }
 
-        if (/^\d+$/.test(ccNumbers) && ccNumbers.value.length > 12 && ccNumbers.value.length < 17) { // typeof(ccNumbers) === 'number' && 
+        if (regexCCNumbers.test(ccNumbers.value)) {
             ccNumbers.style.borderColor = '';
         } else {
             // Conditional error message
             if (ccNumbers.value.length === 0) {
                 ccMessage.textContent = 'Please enter a credit card number';
-            } else if (ccNumbers.value.length < 13 || ccNumbers.value.length > 16) {
+            } else {
                 ccMessage.textContent = 'Please enter a number that is between 13 and 16 digits long';
             }
             ccNumbers.style.borderColor = 'red';
@@ -137,6 +138,7 @@ name.addEventListener('blur', nameValidator);
 email.addEventListener('keyup', emailValidator);
 activity.addEventListener('change', activitiesValidator);
 
+// Submit form if the name, email, activity, and credit card return true;
 form.addEventListener('submit', (e) => {
     if (!nameValidator()) {
         e.preventDefault();
